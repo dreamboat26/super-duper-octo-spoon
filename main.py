@@ -18,7 +18,7 @@ def main():
     st.set_page_config(
         layout="wide",
         page_title="WID AI Automtaed Matching System",
-        page_icon=":graph:"
+        page_icon=":WID:"
     )
     st.sidebar.image('logo (2).png', use_column_width=True) 
     with st.sidebar.expander("Expand Me"):
