@@ -119,12 +119,28 @@ def main():
                 # Transform documents into graph documents
                 transformer = LLMGraphTransformer(
                     llm=llm,
-                    node_properties=True, 
-                    relationship_properties=True
-                ) 
-                generated_nodes_and_relationships = transformer.generate_nodes_and_relationships(lc_docs)
+                    ) 
+                def generate_nodes_and_relationships(docs):
+                  prompt = """
+                  Analyze the following documents and suggest relevant nodes and relationships for a graph database.
+
+                  Documents:
+                  {documents}
+
+                  Please provide a list of nodes (with properties) and relationships (with properties).
+                  """
+                  # Prepare the document contents
+                  document_contents = "\n".join(doc.page_content for doc in docs)
+                  response = llm.generate(prompt.format(documents=document_contents))
+                  # Process the response to extract nodes and relationships
+                  return parse_response(response) 
+
+                # Call the function to generate nodes and relationships
+                generated_nodes_and_relationships = generate_nodes_and_relationships(lc_docs)
+
                 graph_documents = transformer.convert_to_graph_documents(lc_docs, generated_nodes_and_relationships)
-                graph.add_graph_documents(graph_documents, include_source=True)
+                graph.add_graph_documents(graph_documents, include_source=True)  
+
 
                 # Use the stored connection parameters
                 index = Neo4jVector.from_existing_graph(
