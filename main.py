@@ -113,16 +113,19 @@ def main():
                 graph.query(cypher)
 
                 # Define allowed nodes and relationships
-                allowed_nodes = ["Candidate Name", "Exam Date", "Reporting Time", "Test Centre Name"]
-                #allowed_relationships = ["HAS_DISEASE", "TAKES_MEDICATION", "UNDERWENT_TEST", "HAS_SYMPTOM", "TREATED_BY"]
-
+                # Define allowed nodes and relationships
+                allowed_nodes = ["Hospital", "Nursing Home", "Clinic", "Laboratory", "Biomedical Waste Category", "Treatment Method", "Department", "Regulatory Authority", "Municipal Authority"]
+           
+                # Define allowed relationships
+                allowed_relationships = ["GENERATES_WASTE", "REQUIRES_TREATMENT_BY", "REGULATED_BY", "COORDINATED_WITH", "STORED_AT", "TRANSPORTED_TO", "DISPOSED_BY"]
+                        
                 # Transform documents into graph documents
                 transformer = LLMGraphTransformer(
                     llm=llm,
                     allowed_nodes=allowed_nodes,
-                    #allowed_relationships=allowed_relationships,
+                    allowed_relationships=allowed_relationships,
                     node_properties=False, 
-                    relationship_properties=True
+                    relationship_properties=False
                     ) 
                 graph_documents = transformer.convert_to_graph_documents(lc_docs)
                 graph.add_graph_documents(graph_documents, include_source=True) 
