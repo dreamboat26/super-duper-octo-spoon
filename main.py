@@ -17,16 +17,16 @@ from neo4j import GraphDatabase
 def main():
     st.set_page_config(
         layout="wide",
-        page_title="Graphy v1",
-        page_icon=":graph:"
+        page_title="AI Automated Matching System",
+        page_icon=":AI:"
     )
-    st.sidebar.image('logo.png', use_column_width=True) 
+    st.sidebar.image('images.png', use_column_width=True) 
     with st.sidebar.expander("Expand Me"):
         st.markdown("""
     This application allows you to upload a PDF file, extract its content into a Neo4j graph database, and perform queries using natural language.
     It leverages LangChain and OpenAI's GPT models to generate Cypher queries that interact with the Neo4j database in real-time.
     """)
-    st.title("Graphy: Realtime GraphRAG App")
+    st.title("AI Automated Matching System")
 
     load_dotenv()
 
